@@ -15,7 +15,11 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BaseTest {
-
+    public static final String BASE_URL = "https://www.saucedemo.com/";
+    public static final String EXPECTED_URL = "https://www.saucedemo.com/inventory.html";
+    public static final String EXPECTED_CART_URL= "https://www.saucedemo.com/cart.html";
+    public static String username = "standard_user";
+    public static String password = "secret_sauce";
     public static WebDriver driver;
     public static WebDriverWait wait;
 
