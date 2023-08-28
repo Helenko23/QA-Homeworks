@@ -25,28 +25,15 @@ public class ProductsTests extends BaseTest {
 
     public int expectedCountProducts = 2;
 
-//    @BeforeAll
-//    public static void beforeAllTests(){
-//        driver = startBrowser(BrowserTypes.CHROME);
-//
-//        //Configure wait
-//        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
-//
-//        //Navigate to Google.com
-//        driver.get("https://www.saucedemo.com/");
-//
-//        authenticateWithUser(username, password);
-//    }
-
-    @BeforeEach
-    public void beforeEachTest(){
+    @BeforeAll
+    public static void beforeAllTests(){
         driver = startBrowser(BrowserTypes.CHROME);
 
         //Configure wait
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
         //Navigate to Google.com
-        driver.get(BASE_URL);
+        driver.get("https://www.saucedemo.com/");
 
         authenticateWithUser(username, password);
     }

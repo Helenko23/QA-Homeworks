@@ -1,6 +1,7 @@
 package core;
 
 import org.example.BrowserTypes;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -23,8 +24,8 @@ public class BaseTest {
     public static WebDriver driver;
     public static WebDriverWait wait;
 
-    @AfterEach
-    public void afterTest(){
+    @AfterAll
+    public static void afterAllTests(){
         //Close driver
         driver.close();
     }
