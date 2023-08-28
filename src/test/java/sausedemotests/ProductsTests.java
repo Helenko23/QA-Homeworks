@@ -33,7 +33,7 @@ public class ProductsTests extends BaseTest {
         wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
         //Navigate to Google.com
-        driver.get("https://www.saucedemo.com/");
+        driver.get(BASE_URL);
 
         authenticateWithUser(username, password);
     }
