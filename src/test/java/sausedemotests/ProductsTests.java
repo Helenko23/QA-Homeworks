@@ -3,11 +3,12 @@ package sausedemotests;
 import core.BaseTest;
 import dev.failsafe.internal.util.Assert;
 import org.example.BrowserTypes;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
@@ -17,13 +18,29 @@ public class ProductsTests extends BaseTest {
     public static final String ERROR_MESSAGE_ITEMS_COUNT = "Items count not as expected";
     public static final String ERROR_MESSAGE_WRONG_TITLE = "Item title not as expected";
     public static final String ERROR_TOTAL_PRICE = "Items total price not as expected";
+    public static final String ORDER_IN_NOT_COMPLETED = "Order in not completed!";
+    public static final String CART_IS_NOT_EMPTY = "Shopping cart is not empty";
+    public static final String CART_SUCCESS_MESSAGE = "Shopping cart is empty.";
     public static String username = "standard_user";
     public static String password = "secret_sauce";
 
     public int expectedCountProducts = 2;
 
-    @BeforeAll
-    public static void beforeAllTests(){
+//    @BeforeAll
+//    public static void beforeAllTests(){
+//        driver = startBrowser(BrowserTypes.CHROME);
+//
+//        //Configure wait
+//        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+//
+//        //Navigate to Google.com
+//        driver.get("https://www.saucedemo.com/");
+//
+//        authenticateWithUser(username, password);
+//    }
+
+    @BeforeEach
+    public void beforeEachTest(){
         driver = startBrowser(BrowserTypes.CHROME);
 
         //Configure wait
@@ -34,6 +51,7 @@ public class ProductsTests extends BaseTest {
 
         authenticateWithUser(username, password);
     }
+
 
     @Test
     public void productAddedToShoppingCart_when_addToCart(){
@@ -60,6 +78,7 @@ public class ProductsTests extends BaseTest {
         Assertions.assertEquals(tShirtTitle, items.get(1).getText(), ERROR_MESSAGE_WRONG_TITLE);
 
         System.out.printf("Products '%s' and '%s' successfully added to cart.%n", backpackTitle, tShirtTitle);
+
     }
 
     @Test
@@ -118,7 +137,40 @@ public class ProductsTests extends BaseTest {
 
         //Complete Order
         driver.findElement(By.id("continue")).click();
+        driver.findElement(By.id("finish")).click();
+
+        String checkout = driver.findElement(By.className("title")).getText();
+        Assertions.assertEquals("Checkout: Complete!", checkout, ORDER_IN_NOT_COMPLETED);
 
         //Assert Items removed from Shopping Cart
+        driver.findElement(By.id("back-to-products")).click();
+        driver.findElement(By.className("shopping_cart_link")).click();
+
+        // Assert that the shopping cart is empty
+        var cartItems = driver.findElements(By.className("inventory_item_name"));
+        Assertions.assertEquals(0, cartItems.size(), CART_IS_NOT_EMPTY);
+
+        System.out.println(CART_SUCCESS_MESSAGE);
+        driver.findElement(By.id("continue-shopping")).click();
+        System.out.println("The page has been reset.");
+
+
+//        driver.findElement(By.id("react-burger-menu-btn")).click();
+//
+//        //Simulate mouse hover over the logout link
+//        WebElement logoutLink = driver.findElement(By.id("reset_sidebar_link"));
+//        Actions actions = new Actions(driver);
+//        wait.until(ExpectedConditions.visibilityOf(logoutLink));
+//        actions.moveToElement(logoutLink).perform();
+//
+//        // Click the logout link after the hover action
+//        logoutLink.click();
+//        driver.findElement(By.className("shopping_cart_link")).click();
+//        driver.findElement(By.id("continue-shopping")).click();
+
+
+
+
+
     }
 }
