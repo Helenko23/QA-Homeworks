@@ -26,11 +26,6 @@ public class BoardsPage extends BaseTrelloPage {
         actions.clickElement("trello.create.board.submitButton");
     }
 
-//    public void clickOnBoard(String boardName) {
-//        actions.waitForElementVisible("trello.boardsPage.boardByTeamAndName");
-//        actions.clickElement("trello.boardsPage.boardByTeamAndName", boardName);
-//    }
-
     public void clickOnBoard(String boardName) {
         actions.waitForElementVisible("trello.boardsPage.boardByTeamAndName", boardName);
         actions.clickElement("trello.boardsPage.boardByTeamAndName", boardName);

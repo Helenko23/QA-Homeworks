@@ -32,21 +32,14 @@ public class BoardPage extends BaseTrelloPage {
     }
 
     public void deleteBoard() {
-       // WebElement menuButton = driver.findElement(By.xpath("//span[@data-testid='OverflowMenuHorizontalIcon']"));
-        //actions.waitForElementClickable("trello.board.menuButton");
+
         actions.hoverElement("trello.board.menuButton2");
         actions.waitForElementPresent("trello.board.menuButton2");
         actions.clickElement("trello.board.menuButton2");
 
-        //WebElement closeBoardLink = driver.findElement(By.partialLinkText("trello.menu.closeBoard.button"));
-        //closeBoardLink.click();
-
         actions.hoverElement("trello.menu.closeBoard.button2");
         actions.clickElement("trello.menu.closeBoard.button2");
 
-        //String closeButtonClass = "js-confirm full nch-button nch-button--danger";
-        //String closeButtonClass = "//a[contains(text(), 'Close board')]";
-        //WebElement closeButton = driver.findElement(By.className(closeButtonClass));
 
         WebElement closeButton = driver.findElement(By.className("js-confirm"));
         Actions actions = new Actions(driver);

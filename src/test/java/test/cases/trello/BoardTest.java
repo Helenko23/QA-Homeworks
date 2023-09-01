@@ -25,10 +25,8 @@ public class BoardTest extends BaseTest {
         BoardsPage boardsPage = new BoardsPage(actions.getDriver());
         boardsPage.createBoard();
 
-        //boardId = actions.getBoardIdFromPageSource();
-
         BoardPage boardPage = new BoardPage(actions.getDriver());
-        //boardPage.assertListExists("To Do");
+        boardPage.assertListExists("To Do");
 
         boardPage.deleteBoard();
     }
@@ -43,12 +41,6 @@ public class BoardTest extends BaseTest {
 
         BoardPage boardPage = new BoardPage(actions.getDriver());
         boardPage.addCardToList("To Do", "What are you waiting for?");
-
-//        TrelloApi trelloApi = new TrelloApi();
-//        var createBoard  = trelloApi.createBoard("Board name from automation", "Description");
-//        Assert.assertNotNull(createBoard.jsonPath().get("id"));
-//        var deleteResponse = trelloApi.deleteBoard(createBoard.jsonPath().get("id"));
-//        Assert.assertTrue(deleteResponse.statusCode() == HttpStatus.SC_OK);
 
 
     }

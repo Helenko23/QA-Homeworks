@@ -50,7 +50,18 @@ public class UserActionNonImplemented {
     public void assertNavigatedUrl(String urlKey) {
         // TODO: Implement the method
         // 1. Get Current URL
-        // 2. Get expected url by urlKey from Properties
+        String currentUrl = driver.getCurrentUrl();
+
+//        // 2. Get expected url by urlKey from Properties
+//        String expectedUrl = return properties.getProperty(urlKey);
+//
+//        // 3. Assertion
+//        if (currentUrl.equals(expectedUrl)) {
+//            System.out.println("Assertion passed: Navigated URL is as expected.");
+//        } else {
+//            System.out.println("Assertion failed: Navigated URL is not as expected.");
+//        }
+
     }
 
     public void pressKey(Keys key) {
