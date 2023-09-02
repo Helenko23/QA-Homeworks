@@ -13,14 +13,13 @@ public class BoardPage extends BaseTrelloPage {
 
 
     public void addCardToList(String listName, String cardName) {
-        // Wait for the "Add a new card" button to be clickable
         actions.waitForElementPresent("trello.add.card.addButton", listName);
 
-        // Click on the "Add a new card" button for the specified list
         actions.clickElement("trello.add.card.addButton", listName);
 
-        // Input the card name and press Enter
         actions.typeValueInField(cardName, "trello.card.inputField", listName);
+        //actions.waitForElementVisible("trello.card.inputField");
+        actions.waitForElementClickable("trello.card.inputField");
         actions.pressEnter("trello.card.inputField");
     }
 
@@ -33,24 +32,35 @@ public class BoardPage extends BaseTrelloPage {
 
     public void deleteBoard() {
 
-        actions.hoverElement("trello.board.menuButton2");
-        actions.waitForElementPresent("trello.board.menuButton2");
-        actions.clickElement("trello.board.menuButton2");
+        actions.waitForElementClickable("trello.board.menuButton");
+        actions.clickElement("trello.board.menuButton");
 
-        actions.hoverElement("trello.menu.closeBoard.button2");
-        actions.clickElement("trello.menu.closeBoard.button2");
+        actions.waitForElementClickable("trello.menu.closeBoard.button");
+        actions.clickElement("trello.menu.closeBoard.button");
 
+        actions.waitForElementClickable("trello.board.submitButton");
+        actions.clickElement("trello.board.submitButton");
 
-        WebElement closeButton = driver.findElement(By.className("js-confirm"));
-        Actions actions = new Actions(driver);
-        actions.moveToElement(closeButton).perform();
-        closeButton.click();
+    }
 
-        String deleteButtonXPath = "//button[@data-testid='close-board-delete-board-button']";
-        WebElement deleteButton = driver.findElement(By.xpath(deleteButtonXPath));
-        actions.moveToElement(deleteButton).perform();
-        deleteButton.click();
+    public void assertCardExists(String cardName) {
+        actions.waitForElementPresent("trello.boardPage.cardByName", cardName);
+    }
 
+    public void assertBoardIsNotEmpty(String boardName) {
+        actions.waitForElementClickable("trello.boardPage.RecentProject");
+        actions.clickElement("trello.boardPage.RecentProject");
+        actions.waitForElementPresent("trello.header.create.ProjectView", boardName);
+    }
+    public void assertBoardIsEmpty() {
+        actions.waitForElementVisible("trello.board.icon");
+        actions.clickElement("trello.board.icon");
+        actions.waitForElementVisible("trello.empty.board");
+        actions.clickElement("trello.empty.board");
+
+    }
+    public void assertCardMoved(String listName,String cardName ) {
+        actions.waitForElementPresent("trello.boardPage.assertCardMovedToNewList", listName, cardName);
     }
 
 }

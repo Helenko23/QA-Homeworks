@@ -1,11 +1,14 @@
 package test.cases.trello;
 
+import com.telerikacademy.testframework.UserActions;
+import com.telerikacademy.testframework.Utils;
 import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.junit.*;
 import org.openqa.selenium.WebElement;
 import pages.trello.BoardPage;
 import pages.trello.BoardsPage;
+import org.junit.After;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -14,7 +17,8 @@ import static com.telerikacademy.testframework.Utils.getUIMappingByKey;
 
 public class BoardTest extends BaseTest {
 
-    //public String boardId;
+    public BoardPage boardPage;
+    public BoardsPage boardsPage;
 
 
     @Test
@@ -22,50 +26,59 @@ public class BoardTest extends BaseTest {
 
         login();
 
-        BoardsPage boardsPage = new BoardsPage(actions.getDriver());
+        boardsPage = new BoardsPage(actions.getDriver());
         boardsPage.createBoard();
 
-        BoardPage boardPage = new BoardPage(actions.getDriver());
+        boardPage = new BoardPage(actions.getDriver());
         boardPage.assertListExists("To Do");
+        boardPage.assertBoardIsNotEmpty("trello.boardName");
 
         boardPage.deleteBoard();
     }
+
 
     @Test
     public void createNewCardInExistingBoardWhenCreateCardClicked() {
 
         login();
 
-        BoardsPage boardsPage = new BoardsPage(actions.getDriver());
+        boardsPage = new BoardsPage(actions.getDriver());
+        boardsPage.createBoard();
+
+        UserActions actions = new UserActions();
+        actions.waitForElementClickable("trello.allBoards.button");
+        actions.clickElement("trello.allBoards.button");
+
         boardsPage.clickOnBoard("My First Board");
 
-        BoardPage boardPage = new BoardPage(actions.getDriver());
-        boardPage.addCardToList("To Do", "What are you waiting for?");
+        boardPage = new BoardPage(actions.getDriver());
+        boardPage.addCardToList("To Do", "What are you waiting for");
 
+        String cardName = Utils.getUIMappingByKey("trello.board.firstCard");
+        //boardPage.assertCardExists(cardName);
 
+        boardPage.deleteBoard();
     }
 
 
     @Ignore
     @Test
     public void moveCardBetweenStatesWhenDragAndDropIsUsed() {
-//         ListModel responseListFrom = trelloApi.createList(createdBoard.id, "ListNameAutoFrom");
-//         ListModel responseListTo = trelloApi.createList(createdBoard.id, "ListNameAutoTo");
-//         trelloApi.createCard(responseListFrom.id, "CardNameAuto");
-//
-//         actions.dragAndDropElement("trello.boardPage.cardByName", "trello.boardPage.listByName");
+
     }
 
-
-
-    @Ignore
     @Test
     public void deleteBoardWhenDeleteButtonIsClicked() {
-        //API: Create a board
-        //API: Delete board
+        login();
+
+        boardsPage = new BoardsPage(actions.getDriver());
+        boardsPage.createBoard();
+
+        boardPage = new BoardPage(actions.getDriver());
+        boardPage.deleteBoard();
+        boardPage.assertBoardIsEmpty();
 
     }
-
 
 
 }
